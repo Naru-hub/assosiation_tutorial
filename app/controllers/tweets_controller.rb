@@ -1,4 +1,6 @@
 class TweetsController < ApplicationController
+  before_action :authenticate_user!, except: [:index]
+
   def new
     @tweet = Tweet.new
   end
@@ -17,6 +19,8 @@ class TweetsController < ApplicationController
   def show
     @tweet = Tweet.find(params[:id])
     @user = @tweet.user
+    @comment = current_user.comments.build
+    @comments = @tweet.comments
   end
 
   private
